@@ -27,3 +27,19 @@ WITH lab_per_patient AS (
 SELECT SUM(n_labs) AS total_labs,
        AVG(n_labs) AS avg_labs_per_patient
 FROM lab_per_patient;
+
+-- Q3. Distribution of admissions per patient
+WITH adm_per_patient AS (
+    SELECT subject_id, COUNT(*) AS n_admissions
+    FROM admissions
+    GROUP BY subject_id
+)
+SELECT n_admissions,
+       COUNT(*) AS n_patients
+FROM adm_per_patient
+GROUP BY n_admissions
+ORDER BY n_admissions;
+-- Finding: 52/100 patients have a single admission; 48 have >=2 (readmission analysis is feasible).
+-- Check: n_patients sums to 100 and n_admissions x n_patients sums to 275.
+
+
